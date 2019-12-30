@@ -73,16 +73,16 @@ private:
     ItemTmpl<std::string> itemStr_;
 };
 
-class ItemPrinter
+class ItemWrapper
 {
 public:
     template<typename... Args>
-    ItemPrinter(const Args&... items) {
+    ItemWrapper(const Args&... items) {
         std::vector<Item> tmpItems {items...};
         vecItem_ = std::move(tmpItems);
     }
 
-    //~ItemPrinter() { Print(); }
+    //~ItemWrapper() { Print(); }
 
     void Print() {
         cout << "\033[" << (Cursor::Inst().Get()) << "C";

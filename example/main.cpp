@@ -4,7 +4,12 @@ class TestHelloworld : TestModel {
 public:
     TestHelloworld() : TestModel("TestHelloworld") {
         Item item("hello world");
-        ItemPrinter(item).Print();
+        ItemWrapper(item).Print();
+
+        ItemWrapper(
+            Item(1, "%d: Hello world"),
+            Item(2, "%d: Hello world")
+        ).Print();
     }
 };
 
