@@ -1,12 +1,20 @@
 #pragma once
 
+#include <cxxabi.h>
+
 #include "Item.h"
+#include "Input.h"
 
 using namespace std;
 
-class TestModel {
+class TestModel : Input {
 public:
-    TestModel(const string& name = string()) { 
+    template<typename T>
+    TestModel(const T& t, Parent parent = nullptr) {
+        string name = abi::__cxa_demangle(typeid(t).name(), nullptr, nullptr, nullptr);
+
+        BuildInput(name, parent);
+
         int indent = (Cursor::Inst().Get() == 0 ? 0 : Cursor::Inst().Get());
         cout << "\033[" << indent << "C";
         cout << name << " {" << endl;
@@ -34,6 +42,8 @@ public:
 private:
     static void* context_;
 };
+
+using Parent = const TestModel *;
 
 template<typename... Args>
 class TestWrapper {

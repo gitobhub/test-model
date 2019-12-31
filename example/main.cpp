@@ -2,9 +2,15 @@
 
 class TestHelloworld : TestModel {
 public:
-    TestHelloworld() : TestModel("TestHelloworld") {
+    TestHelloworld(Parent parent) : TestModel(this, parent) {
         Item item("hello world");
         ItemWrapper(item).Print();
+
+        int one = Get<int>("one"); //{"one": 1}
+
+        vector<int> ivec = Array<int>("uids"); //{"uids" : [1, 2, 3]}
+
+        Get<string>("family", "father", "name");    //{"family": {"father": {"name": "bb"}}}
 
         ItemWrapper(
             Item(1, "%d: Hello world"),
@@ -13,10 +19,17 @@ public:
     }
 };
 
+class TestSubExample : TestModel {
+public:
+    TestSubExample(Parent parent) : TestModel(this, parent) {
+        TestHelloWorld(this);
+    }
+}
+
 class TestExample : TestModel {
 public:
-    TestExample() : TestModel("TestExample") {
-        TestHelloworld();
+    TestExample() : TestModel(this) {
+        TestSubExample(this);
     }
 };
 
