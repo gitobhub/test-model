@@ -1,3 +1,3 @@
 #include "TestModel.h"
 
-void* TestModel::context_ = nullptr;
+//void* TestModel::context_ = nullptr;

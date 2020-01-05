@@ -1,8 +1,8 @@
 #include "TestModel.h"
 
-class TestHelloworld : TestModel {
+class TestHelloworld : TestModel<> {
 public:
-    TestHelloworld(Parent parent) : TestModel(this, parent) {
+    TestHelloworld() : TestModel(this) {
         Item item("hello world");
         ItemWrapper(item).Print();
 
@@ -19,18 +19,14 @@ public:
     }
 };
 
-class TestSubExample : TestModel {
+class TestSubExample : TestModel<TestHelloworld> {
 public:
-    TestSubExample(Parent parent) : TestModel(this, parent) {
-        TestHelloWorld(this);
-    }
-}
+    TestSubExample() : TestModel(this) {}
+};
 
-class TestExample : TestModel {
+class TestExample : TestMoel<TestSubExample> {
 public:
-    TestExample() : TestModel(this) {
-        TestSubExample(this);
-    }
+    TestExample() : TestModel(this) {}
 };
 
 int main()
