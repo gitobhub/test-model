@@ -1,8 +1,14 @@
 {
     "TestExample": {
-        "TestHelloworld": {
-            "one": 1,
-            "two": 2
+        "TestSubExample": {
+            "TestHelloworld": {
+                "one": 1,
+                "two": 2, 
+                "three": {
+                    "value": "3"
+                },
+                "uids": [1, 2, 3]
+            }
         }
     }
 }

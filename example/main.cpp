@@ -5,25 +5,30 @@ public:
     TestHelloworld() : TestModel(this) {}
     
     void Work() override {
+        PrettyPrinter printer;
+
         Item item("hello world");
-        ItemWrapper(item).Print();
+        printer += ItemWrapper(item);
 
         int one = Get<int>("one"); //{"one": 1}
-
-        ItemWrapper(
+        
+        printer += ItemWrapper(
             Item(one),
             Item(Get<int>("two")),
-            Item(Get<int>("three", "value"))
-        ).Print();
+            Item(Get<string>("three", "value"))
+        );
 
-//        vector<int> ivec = Array<int>("uids"); //{"uids" : [1, 2, 3]}
+        vector<int> ivec = Array<int>("uids"); //{"uids" : [1, 2, 3]}
+        printer += ItemWrapper(ivec);
 
 //        Get<string>("family", "father", "name");    //{"family": {"father": {"name": "bb"}}}
 
-        ItemWrapper(
+        printer += ItemWrapper(
             Item(1, "%d: Hello world"),
             Item(2, "%d: Hello world")
-        ).Print();
+        );
+
+        printer.Print();
     }
 };
 
