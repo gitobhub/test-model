@@ -11,5 +11,6 @@ cc_library (
   export_incs = ["."],
   extra_cppflags = [
     "-std=gnu++11",
+    "-Wno-format-nonliteral",
   ],
 )

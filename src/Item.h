@@ -7,6 +7,10 @@
 
 #include "Cursor.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic push
+
 using namespace std;
 
 template<typename T>
