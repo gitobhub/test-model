@@ -14,13 +14,21 @@ public:
 public:
     Json(const std::string& name, const Input::Store* root);
 
-    void Get(const std::string& key, int& value) override;
+    void Get(const std::string& key, uint64_t& value) override;
 
     void Get(const std::string& key, std::string& value) override;
 
-    void Get(const std::vector<std::string>& vecKey, int& value) override;
+    void Get(const std::vector<std::string>& vecKey, uint64_t& value) override;
 
     void Get(const std::vector<std::string>& vecKey, std::string& value) override;
+
+    void Get(const std::string& key, std::vector<uint64_t>& value) override;
+
+    void Get(const std::string& key, std::vector<std::string>& value) override;
+
+    void Get(const std::vector<std::string>& vecKey, std::vector<uint64_t>& value) override;
+
+    void Get(const std::vector<std::string>& vecKey, std::vector<std::string>& value) override;
 
 private:
     const json11::Json& Build(const Input::Store* root);
@@ -29,9 +37,13 @@ private:
 
     const json11::Json& Get(const std::vector<std::string>& vecKey) const;
 
-    void Get(const json11::Json& json, int& value);
+    void Get(const json11::Json& json, uint64_t& value);
 
     void Get(const json11::Json& json, std::string& value);
+ 
+    void Get(const json11::Json& json, std::vector<uint64_t>& value);
+
+    void Get(const json11::Json& json, std::vector<std::string>& value);
  
 private:
     std::string name_;
@@ -56,6 +68,7 @@ private:
 
 private:
     json11::Json all_;
+    std::string jsonFile_ = "input.json";
 };
 
 //} // namespace
