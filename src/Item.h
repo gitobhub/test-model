@@ -103,7 +103,7 @@ public:
     }
 
     template<typename T>
-    ItemWrapper(const std::vector<T>& vecVal, const char* format) {
+    ItemWrapper(const std::vector<T>& vecVal, const char* format = nullptr) {
         for (const T& val : vecVal) {
             vecItem_.emplace_back(val, format);
         }

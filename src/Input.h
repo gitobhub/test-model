@@ -14,7 +14,6 @@ public:
 
     template<typename T>
     T Get(const std::string& key) {
-//        printf("Input::Get key\n");
         T value;
         pStore_->Get(key, value);
         return std::move(value);
@@ -22,8 +21,7 @@ public:
 
     template<typename T, typename... Args>
     T Get(const Args&... args) {
-//        printf("Input::Get args...\n");
-        decltype(Convert(T{})) value;
+        auto value = Convert(T{});
         std::vector<std::string> vecKey {args...};
         if (pStore_.get() == nullptr) {
             printf("store is null\n");
@@ -34,14 +32,18 @@ public:
 
     template<typename T, typename... Args>
     std::vector<T> Array(const Args&... args) {
-//        printf("Input::Get args...\n");
-        std::vector<T> value;
+        std::vector<decltype(Convert(T{}))> value;
         std::vector<std::string> vecKey {args...};
         if (pStore_.get() == nullptr) {
             printf("store is null\n");
         }
         pStore_->Get(vecKey, value);
-        return std::move(value);
+
+        std::vector<T> vecRet(value.size());
+        for (int i = 0; i < value.size(); ++i) {
+            vecRet[i] = std::move(value[i]);
+        }
+        return std::move(vecRet);
     }
 
     class Store {
