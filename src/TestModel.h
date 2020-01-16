@@ -35,6 +35,9 @@ public:
         Work();
 
         BuildSubModel();
+
+        Output::Close();
+
         //printf("contructor end\n");
     };
 

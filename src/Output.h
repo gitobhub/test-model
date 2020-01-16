@@ -1,5 +1,7 @@
 #pragma once
 
+#include <atomic>
+
 #include "Cursor.h"
 
 class Output
@@ -13,8 +15,13 @@ public:
     }
 
     void Close() {
-        cout << "\033[" << (Cursor::Inst() -= 4) << "C";
-        cout << "}" << endl;
+        if (!bClosed_) {
+            cout << "\033[" << (Cursor::Inst() -= 4) << "C";
+            cout << "}" << endl;
+            bClosed_ = true;
+        }
     }
 
+private:
+    std::atomic<bool> bClosed_ {false};
 };
