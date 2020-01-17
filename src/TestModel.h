@@ -1,7 +1,8 @@
 #pragma once
 
-#include <tuple>
 #include <cxxabi.h>
+#include <sys/time.h>
+#include <tuple>
 #include <thread>
 
 #include "Item.h"
@@ -32,7 +33,23 @@ public:
 
         Input::Build(name_, root);
 
-        Work();
+        {
+            ::timeval tvStart {};
+            ::timeval tvEnd {};
+
+            ::gettimeofday(&tvStart, nullptr);
+            Work();
+            ::gettimeofday(&tvEnd, nullptr);
+
+            const char* workCostFormat = "cost: %u ms";
+            uint32_t workCostMs = (tvEnd.tv_sec - tvStart.tv_sec) * 1000 + (tvEnd.tv_usec - tvStart.tv_usec) / 1000;
+            if (workCostMs == 0) {
+                workCostMs = (tvEnd.tv_sec - tvStart.tv_sec) * 1000 * 1000 + (tvEnd.tv_usec - tvStart.tv_usec);
+                workCostFormat = "cost: %u us";
+            }
+            ItemWrapper(Item(workCostMs, workCostFormat)).Print();
+        }
+
 
         BuildSubModel();
 
